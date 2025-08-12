@@ -1,0 +1,43 @@
+.container {
+	display: flex;
+	padding: 1em;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 0.5em;
+	border-radius: 0.5em;
+}
+
+.expenses {
+	background-color: #91333b;
+	/* color: #721c24; */
+	padding: 0.5em;
+	border-radius: 0.5em;
+}
+
+.incomes {
+	background-color: #62936e;
+	/* color: #155724; */
+	padding: 0.5em;
+	border-radius: 0.5em;
+}
+
+.summary-item {
+	margin: 0.5em 0;
+	color: #fff;
+}
+
+.download_button {
+	background-color: #007bff;
+	color: white;
+	padding: 0.5em 1em;
+	border: none;
+	border-radius: 0.5em;
+	cursor: pointer;
+	font-size: 1em;
+	text-decoration: none;
+}
+
+.download_button:hover {
+	background-color: #0056b3;
+	color: white;
+}

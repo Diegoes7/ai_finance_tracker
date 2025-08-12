@@ -1,0 +1,67 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AI Advisor</title>
+		<link rel="stylesheet" href="{% static 'advisor/styles.css' %}" />
+	</head>
+	<body>
+		<a href="{% url 'prompts_page' %}" class="link-button">Go to Prompts</a>
+		<h1 class="title">AI Agent - Text Generator</h1>
+		<p>Ask a question, and our AI agent will provide an answer!</p>
+
+		<textarea
+			id="questionInput"
+			autofocus
+			cols="17"
+			placeholder="Type your question here..."
+		>
+		</textarea>
+
+		<button class='chat_button' onclick="generateAnswer()">Generate Answer</button>
+		<div id="responseBox" aria-disabled="true"></div>
+
+		<script>
+			async function generateAnswer() {
+				const question = document.getElementById('questionInput').value;
+				if (!question) {
+					alert('Please enter a question.');
+					return;
+				}
+
+				const responseBox = document.getElementById('responseBox');
+				responseBox.innerHTML = `
+				<div id="loading" style="text-align: center; margin: 5px">
+					<span class="loading-icon">⏳</span>
+					<span> Generating response...</span>
+				</div>
+				`;
+
+				try {
+					const response = await fetch("{% url 'chat_view' %}", {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							prompt: question,
+							user_id: "{{ user_id|default:'anonymous' }}",
+						}),
+					});
+					const data = await response.json();
+					if (data.response) {
+						responseBox.innerHTML = `<p>${data.response}</p>`;
+					} else {
+						responseBox.innerHTML = 'Error generating response.';
+					}
+				} catch (err) {
+					console.error(err);
+					responseBox.innerHTML = 'Error generating response.';
+				}
+			}
+		</script>
+	</body>
+</html>
+{% endblock %}

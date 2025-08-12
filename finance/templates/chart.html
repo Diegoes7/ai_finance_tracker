@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Transaction Chart{% endblock %}
+
+{% block content %}
+	<div class="form-button">
+		<!-- <p>Go back to <a href="{% url 'index' %}">Home page</a>.</p> -->
+	</div>
+	<h1>Transaction Chart</h1>
+	<div class="chart-container">
+		<img src="data:image/png;base64,{{ chart }}" alt="Transaction Chart" />
+	</div>
+{% endblock %}

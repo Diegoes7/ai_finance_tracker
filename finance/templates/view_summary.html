@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Transaction Summary{% endblock %}
+
+{% block content %}
+  <h1>Transaction Summary</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="field">
+      <label for="start_date">Start date:</label>
+      <input type="date" id="start_date" name="start_date" required />
+    </div>
+
+    <div class="field">
+      <label for="end_date">End date:</label>
+      <input type="date" id="end_date" name="end_date" required />
+    </div>
+
+    <div class="form-button">
+      <button type="submit">View</button>
+    </div>
+  </form>
+
+  <div>
+    {% if transactions %}
+      <div class="wrapper-transactions">
+        <div class="summary">
+          <h2>Summary:</h2>
+          <div>
+            <p><span class="summary_title">Total Income:</span> $ {{ summary.total_income }}</p>
+            <p><span class="summary_title">Total Expense:</span> $ {{ summary.total_expense }}</p>
+            <p><span class="summary_title">Savings:</span> $ {{ summary.net_savings }}</p>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column">
+          <h2 style="margin-bottom: 0.5em">Transactions</h2>
+          <ul class="transactions">
+            {% for t in transactions %}
+              <li class="transaction-item {% if t.category == 'Income' %}income{% else %}expense{% endif %}">
+                <span class="category">{{ t.category }}</span>
+                <span class="date">{{ t.date }}</span>
+                <span class="amount {% if t.category == 'Income' %}''{% else %}expense{% endif %}">$ {{ t.amount }}</span>
+                <span class="description">{{ t.description }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% else %}
+      <p>No transactions found for the selected date range.</p>
+    {% endif %}
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <p class="message {{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Transaction Summary</title>
+		<link rel="stylesheet" href="{% static 'finance_tracker/style.css' %}" />
+	</head>
+	<body>
+		<div class="layout">
+			<h1>Transaction Summary</h1>
+			<form method="post">
+				{% csrf_token %}
+				<div class="field">
+					<label for="start_date">Start date:</label>
+					<input type="date" id="start_date" name="start_date" required />
+				</div>
+
+				<div class="field">
+					<label for="end_date">End date:</label>
+					<input type="date" id="end_date" name="end_date" required />
+				</div>
+
+				<div class="form-button">
+					<button type="submit">View</button>
+				</div>
+			</form>
+
+			<div>
+				{% if transactions %}
+				<div class="wrapper-transactions">
+					<div class="summary">
+						<h2>Summary</h2>
+						<div>
+							<p>
+								<span class="title">Total Income:</span> $
+								{{summary.total_income}}
+							</p>
+							<p>
+								<span class="title">Total Expense: </span> $
+								{{summary.total_expense}}
+							</p>
+							<p>
+								<span class="title">Savings: </span> $ {{ summary.net_savings }}
+							</p>
+						</div>
+					</div>
+					<div style="display: flex; flex-direction: column">
+						<h2 style="margin-bottom: 0.5em">Transactions</h2>
+						<ul class="transactions">
+							{% for t in transactions %}
+							<li
+								class="transaction-item {% if t.category == 'Income' %}income{% else %}expense{% endif %}"
+							>
+								<span class="category">{{ t.category }}</span>
+								<span class="date">{{ t.date }}</span>
+								<span class="amount">${{ t.amount }}</span>
+								<span class="description">{{ t.description }}</span>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% else %}
+				<p>No transactions found for the selected date range.</p>
+				{% endif %}
+			</div>
+
+			{% if messages %} {% endif %}
+		</div>
+	</body>
+</html> -->

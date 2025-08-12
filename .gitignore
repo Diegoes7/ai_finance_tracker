@@ -1,0 +1,62 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folder (common names)
+venv/
+env/
+.venv/
+.env/
+
+# Django migrations (optional, but usually pushed)
+# If you want to exclude migrations, uncomment the next line
+# */migrations/
+
+# Database files (if using SQLite locally)
+*.sqlite3
+
+# Media uploads (user-uploaded files)
+media/
+
+# Static files collected by collectstatic
+staticfiles/
+
+# Environment variables file containing secrets
+.env
+*.env
+
+# PyCharm or other IDE config files
+.idea/
+.vscode/
+
+# Mac OS system files
+.DS_Store
+
+# Logs
+*.log
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# Test output
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Byte-compiled / optimized / DLL files
+*.pyo
+*.pyd
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Backup files
+*.bak
+*.swp

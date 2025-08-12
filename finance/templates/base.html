@@ -1,0 +1,37 @@
+<!-- finance/templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>{% block title %}Finance Tracker{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'finance_tracker/style.css' %}" />
+		{% block extra_styles %}{% endblock %}
+	</head>
+	<body>
+		<!-- NAVBAR -->
+		<nav class="navbar">
+			<a href="/" class="logo-link">
+				<img
+					class="logo"
+					src="{% static 'finance_tracker/finance-logo.jpg' %}"
+					alt="Logo"
+					class="logo"
+				/>
+			</a>
+			<h1>Welcome to the Finance Tracker</h1>
+			<div class="addons">
+				<a href="{% url 'view_summary' %}">Filter Payments</a>
+				<a href="{% url 'transaction_chart' %}">Chart view</a>
+				<a href="{% url 'index' %}">Summary</a>
+				<a href="{% url 'chat_page' %}">AI Chat</a>
+			</div>
+		</nav>
+
+		<!-- Page content -->
+	{% if "advisor" not in request.path %}
+    {% include "advisor/chat_widget.html" %}
+{% endif %}
+		<div class="layout">{% block content %}{% endblock %}</div>
+	</body>
+</html>

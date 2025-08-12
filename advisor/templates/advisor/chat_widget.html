@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AI Advisor</title>
+		<link rel="stylesheet" href="{% static 'advisor/styles.css' %}" />
+	</head>
+	<body>
+		<div id="chat-icon" title='AI Advisor'>💬</div>
+
+		<div id="chat-box" style="display: none">
+			<div id="chat-messages"></div>
+			<div id="loading" style="display: none; text-align: center; margin: 5px">
+				<span class="loading-icon">⏳</span>
+				<span> Generating response...</span>
+			</div>
+
+			<div id="chat-input">
+				<input type="text" id="chat-prompt" placeholder="Type a message..." />
+				<button onclick="sendChat()">Ask</button>
+			</div>
+		</div>
+
+		<script>
+			document.getElementById('chat-icon').onclick = function () {
+				const box = document.getElementById('chat-box');
+				box.style.display = box.style.display === 'none' ? 'flex' : 'none';
+			};
+
+			//
+			async function sendChat() {
+				const input = document.getElementById('chat-prompt');
+				const message = input.value.trim();
+				if (!message) return;
+
+				appendMessage('You', message);
+				input.value = '';
+
+				document.getElementById('loading').style.display = 'block';
+
+				try {
+					const res = await fetch('/advisor/api/chat/', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							prompt: message,
+							user_id: 'guest' || 'anonymous',
+						}),
+					});
+
+					const data = await res.json();
+					if (data.response) {
+						appendMessage('Bot', data.response);
+					} else {
+						appendMessage('Bot', 'Error: ' + (data.error || 'Unknown'));
+					}
+				} catch (err) {
+					appendMessage('Bot', 'Error: Unable to connect to server.');
+				} finally {
+					document.getElementById('loading').style.display = 'none';
+				}
+			}
+
+			function appendMessage(sender, text) {
+				const msgContainer = document.getElementById('chat-messages');
+				const msg = document.createElement('div');
+				msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+				msg.style.margin = '0.5em 0';
+				msg.style.borderBottom = '0.1em solid #ccc';
+				msg.style.padding = '0.25em';
+
+				msgContainer.appendChild(msg);
+				msgContainer.scrollTop = msgContainer.scrollHeight;
+			}
+		</script>
+	</body>
+</html>

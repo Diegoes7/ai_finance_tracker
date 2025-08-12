@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Add Transaction | Tracker{% endblock %}
+
+{% block content %}
+  <!-- TRANSACTION FORM -->
+	 <div class='outer_wrapper'>
+  <form method="post" class="add_transaction">
+    <h1>Add Transaction</h1>
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.amount.id_for_label }}">Amount:</label>
+      {{ form.amount }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.description.id_for_label }}">Description:</label>
+      {{ form.description }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.date.id_for_label }}">Date:</label>
+      {{ form.date }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.category.id_for_label }}">Category:</label>
+      {{ form.category }}
+    </div>
+    <div class="form-button">
+      <button type="submit" class="btn">Add</button>
+    </div>
+  </form>
+
+  <!-- MESSAGES -->
+	 <div class='wrapper_added_transaction'>
+		 {% if messages %}
+		 <ul class="messages">
+			 {% for message in messages %}
+			 <li class="{{ message.tags }}">{{ message }}</li>
+			 {% endfor %}
+			</ul>
+			{% endif %}
+			
+			{% if last_transaction %}
+			<div class="last-transaction">
+				<h2>Last Added Transaction</h2>
+				<ul>
+					<li><strong>Date:</strong> {{ last_transaction.date }}</li>
+					<li><strong>Amount:</strong> {{ last_transaction.amount }}</li>
+					<li><strong>Category:</strong> {{ last_transaction.category }}</li>
+					<li><strong>Description:</strong> {{ last_transaction.description }}</li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	 </div>
+{% endblock %}
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tracker</title>
+		<link rel="stylesheet" href="{% static 'finance_tracker/style.css' %}" />
+	</head>
+	<body>
+		<nav class="navbar">
+			<h1>Welcome to the Finance Tracker</h1>
+			<div class="addons">
+				<a href="summary">Filter Payments</a>
+				<a href="chart_transactions">Chart view</a>
+				<a href="all_records">Summery</a>
+			</div>
+		</nav>
+
+		<div class="layout">
+			<form method="post" class="add_transaction">
+				<h1>Add Transaction</h1>
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="{{ form.amount.id_for_label }}">Amount:</label>
+					{{ form.amount }}
+				</div>
+				<div class="form-group">
+					<label for="{{ form.description.id_for_label }}">Description:</label>
+					{{ form.description }}
+				</div>
+				<div class="form-group">
+					<label for="{{ form.date.id_for_label }}">Date:</label>
+					{{ form.date }}
+				</div>
+				<div class="form-group">
+					<label for="{{ form.category.id_for_label }}">Category: </label>
+					{{ form.category }}
+				</div>
+				<div class="form-button">
+					<button type="submit" class="btn">Add</button>
+				</div>
+			</form>
+
+			{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li class="{{ message.tags }}">{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %} {% if last_transaction %}
+			<div class="last-transaction">
+				<h2>Last Added Transaction</h2>
+				<ul>
+					<li><strong>Date:</strong> {{ last_transaction.date }}</li>
+					<li><strong>Amount:</strong> {{ last_transaction.amount }}</li>
+					<li><strong>Category:</strong> {{ last_transaction.category }}</li>
+					<li>
+						<strong>Description:</strong> {{ last_transaction.description }}
+					</li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	</body>
+</html> -->

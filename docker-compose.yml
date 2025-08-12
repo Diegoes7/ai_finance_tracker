@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  django:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - CHROMA_API_URL=http://chromadb:8000
+    volumes:
+      - ./django-app:/app
+      - finance_tracker_chroma-data:/data   # Share Chroma's volume
+    depends_on:
+      - chromadb
+    restart: unless-stopped
+
+  chromadb:
+    image: chromadb/chroma
+    ports:
+      - "8001:8000"
+    environment:
+      - ALLOW_RESET=false
+      - PERSIST_DIRECTORY=/data
+    volumes:
+      - finance_tracker_chroma-data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - '11434:11434'
+    restart: unless-stopped
+
+volumes:
+  finance_tracker_chroma-data:
+  ollama-data:

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Summary{% endblock %}
+
+{% block extra_styles %}
+  <link rel="stylesheet" href="{% static 'finance_tracker/all_records.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div style='display: flex; gap: 2em; align-items: baseline; width: 100%; justify-content: space-around'>
+	<h1>Ledger</h1>
+	<a href="{% url 'download_financial_data' %}" class="download_button" id="uploadButton">
+  Download in CSV
+</a>
+</div>
+  <div class="container">
+    <div class="expenses">
+      <h1 style='text-align: center;color: #fff;'>Expenses</h1>
+      <ol>
+        {% for expense in expenses %}
+          <li class="summary-item">
+            {{ expense.description }}: $ {{ expense.amount }} at {{ expense.date }}
+          </li>
+        {% empty %}
+          <li>No more expenses.</li>
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="incomes">
+      <h1 style='text-align: center; color: #fff;'>Incomes</h1>
+      <ol>
+        {% for income in incomes %}
+          <li class="summary-item">
+            {{ income.description }}: $ {{ income.amount }} at {{ income.date }}
+          </li>
+        {% empty %}
+          <li>No more incomes.</li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+{% endblock %}
