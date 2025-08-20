@@ -1,11 +1,15 @@
+import os
 import requests
 import json
 from django.http import JsonResponse
 from .chroma_client import add_to_chroma, get_context
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "llama3"  # or "mistral", etc.
+# OLLAMA_URL = "http://localhost:11434/api/generate"
+# MODEL_NAME = "llama3"  # or "mistral", etc.
 
+OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://ollama:11434")
+OLLAMA_URL = f"{OLLAMA_HOST}/api/generate"
+MODEL_NAME = "llama3"  # or "mistral", etc.
 
 def generate_response(prompt: str) -> str:
     payload = {

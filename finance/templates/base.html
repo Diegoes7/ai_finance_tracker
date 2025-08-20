@@ -20,7 +20,11 @@
 				/>
 			</a>
 			<h1>Welcome to the Finance Tracker</h1>
-			<div class="addons">
+
+			<!-- Hamburger button -->
+			<div class="hamburger" onclick="toggleMenu()">☰</div>
+
+			<div class="addons" id="nav-links">
 				<a href="{% url 'view_summary' %}">Filter Payments</a>
 				<a href="{% url 'transaction_chart' %}">Chart view</a>
 				<a href="{% url 'index' %}">Summary</a>
@@ -29,9 +33,14 @@
 		</nav>
 
 		<!-- Page content -->
-	{% if "advisor" not in request.path %}
-    {% include "advisor/chat_widget.html" %}
-{% endif %}
-		<div class="layout">{% block content %}{% endblock %}</div>
+		{% if "advisor" not in request.path %} 
+		{% include "chat_widget.html"%} 
+		{% endif %}
+		<div class="layout">{% block content %} {% endblock %}</div>
+		<script>
+			function toggleMenu() {
+				document.getElementById('nav-links').classList.toggle('active');
+			}
+		</script>
 	</body>
 </html>

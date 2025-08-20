@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{% static 'advisor/styles.css' %}" />
 	</head>
 	<body>
-		<div id="chat-icon" title='AI Advisor'>💬</div>
+		<div id="chat-icon" title="AI Advisor">💬</div>
 
 		<div id="chat-box" style="display: none">
 			<div id="chat-messages"></div>
@@ -42,12 +42,12 @@
 				document.getElementById('loading').style.display = 'block';
 
 				try {
-					const res = await fetch('/advisor/api/chat/', {
+					const res = await fetch("{% url 'chat_view' %}", {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
 							prompt: message,
-							user_id: 'guest' || 'anonymous',
+							user_id: "{{ user_id|default:'anonymous' }}",
 						}),
 					});
 

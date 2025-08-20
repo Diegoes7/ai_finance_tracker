@@ -11,9 +11,16 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
+    path("chat/", views.chat_view, name="chat_view"),
     path("", views.chat_page, name="chat_page"),
     path("prompts/", views.prompts_page, name="prompts_page"),
-    path("generate/", views.chat_view, name="chat_view"),
-    path('api/chat/', views.chat_view, name='chat_api'),
 ]
+
+# urlpatterns = [
+#     path("", views.chat_page, name="chat_page"),
+#     path("prompts/", views.prompts_page, name="prompts_page"),
+#     path("generate/", views.chat_view, name="chat_view"),
+#     path('api/chat/', views.chat_view, name='chat_api'),
+# ]

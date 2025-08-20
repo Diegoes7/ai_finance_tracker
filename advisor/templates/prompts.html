@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="{% static 'advisor/styles.css' %}" />
+		<title>Prompt History</title>
+	</head>
+	<body>
+		<div
+			style="
+				display: flex;
+				width: 100%;
+				justify-content: center;
+				border-bottom: 0.25em solid #436086;
+				justify-content: space-between;
+				gap: 1em;
+			"
+		>
+			<h1
+				style="
+					text-align: center;
+					font-size: 2em;
+					font-weight: 700;
+					margin: 0;
+					justify-content: space-between;
+				"
+			>
+				History
+			</h1>
+			<a
+				style="margin-bottom: 0.5em"
+				href="{% url 'chat_page' %}"
+				class="link-button"
+				>Back to AI Agent</a
+			>
+		</div>
+
+		<ol style="display: flex; flex-direction: column-reverse">
+			{% for prompt, response in prompts_and_responses %}
+			<li>
+				<strong>User Prompt:</strong>
+				<p style="margin-top: 0.5em">{{ prompt }}</p>
+				<strong>AI Response:</strong>
+				<div id="ai_response" onclick="this.classList.toggle('expanded')">
+					{{ response }}
+				</div>
+			</li>
+			{% empty %}
+			<h3 style="font-size: 1.5em; font-weight: 700">No prompts yet.</h3>
+			{% endfor %}
+		</ol>
+	</body>
+</html>
+{% endblock %}

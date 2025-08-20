@@ -8,9 +8,10 @@ services:
     environment:
       - DEBUG=True
       - CHROMA_API_URL=http://chromadb:8000
+      - OLLAMA_HOST=http://ollama:11434 
     volumes:
-      - ./django-app:/app
-      - finance_tracker_chroma-data:/data   # Share Chroma's volume
+      - .:/app  # <-- use the actual project folder with manage.py
+      - chroma-data:/data
     depends_on:
       - chromadb
     restart: unless-stopped
@@ -23,7 +24,7 @@ services:
       - ALLOW_RESET=false
       - PERSIST_DIRECTORY=/data
     volumes:
-      - finance_tracker_chroma-data:/data
+      - chroma-data:/data
     restart: unless-stopped
 
   ollama:
@@ -42,5 +43,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  finance_tracker_chroma-data:
+  chroma-data:
   ollama-data:

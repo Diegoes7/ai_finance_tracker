@@ -1,6 +1,5 @@
 {% extends "base.html" %} 
-{% load static %} 
-{% block content %}
+{% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -10,10 +9,11 @@
 		<link rel="stylesheet" href="{% static 'advisor/styles.css' %}" />
 	</head>
 	<body>
-		<a href="{% url 'prompts_page' %}" class="link-button">Go to Prompts</a>
-		<h1 class="title">AI Agent - Text Generator</h1>
+		<div class="title_container">
+			<h1 class="title">AI Finance Advisor </h1>
+			<a href="{% url 'prompts_page' %}" class="link-button">Go to Prompts</a>
+		</div>
 		<p>Ask a question, and our AI agent will provide an answer!</p>
-
 		<textarea
 			id="questionInput"
 			autofocus
@@ -22,7 +22,9 @@
 		>
 		</textarea>
 
-		<button class='chat_button' onclick="generateAnswer()">Generate Answer</button>
+		<button class="chat_button" onclick="generateAnswer()">
+			Generate Answer
+		</button>
 		<div id="responseBox" aria-disabled="true"></div>
 
 		<script>
